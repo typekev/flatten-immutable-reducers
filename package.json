@@ -1,6 +1,6 @@
 {
   "name": "redux-immutable-merge-reducers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Return the flattened output of the redux-immutable combineReducers function.",
   "main": "index.js",
   "scripts": {
