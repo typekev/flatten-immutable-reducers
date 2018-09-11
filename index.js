@@ -1,48 +1,50 @@
-import { fromJS, Map } from 'immutable';
-import { combineReducers } from 'redux-immutable';
+'use strict';
 
-const flatCombineReducers = reducers => {
-  return (previousState, action) => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _immutable = require('immutable');
+
+var _reduxImmutable = require('redux-immutable');
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var flatCombineReducers = function flatCombineReducers(reducers) {
+  return function (previousState, action) {
     if (!previousState) {
-      return reducers.reduce(
-        (state = {}, reducer) =>
-          fromJS({ ...fromJS(state).toJS(), ...reducer(previousState, action).toJS() }),
-        {},
-      );
+      return reducers.reduce(function () {
+        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var reducer = arguments[1];
+        return (0, _immutable.fromJS)(_extends({}, (0, _immutable.fromJS)(state).toJS(), reducer(previousState, action).toJS()));
+      }, {});
     }
-    const combinedReducers = combineReducers(reducers);
-    const combinedPreviousState = fromJS(
-      reducers.reduce(
-        (accumulatedPreviousStateDictionary, reducer, reducerIndex) => ({
-          ...accumulatedPreviousStateDictionary,
-          [reducerIndex]: previousState,
-        }),
-        {},
-      ),
-    );
-    const combinedState = combinedReducers(combinedPreviousState, action).toJS();
-    const isStateEqualToPreviousState = state =>
-      Object.values(combinedPreviousState.toJS()).filter(previousStateForComparison =>
-        Map(fromJS(previousStateForComparison)).equals(Map(fromJS(state))),
-      ).length > 0;
-    const newState = Object.values(combinedState).reduce(
-      (accumulatedState, state) =>
-        isStateEqualToPreviousState(state)
-          ? {
-              ...state,
-              ...accumulatedState,
-            }
-          : {
-              ...accumulatedState,
-              ...state,
-            },
-      {},
-    );
+    var combinedReducers = (0, _reduxImmutable.combineReducers)(reducers);
+    var combinedPreviousState = (0, _immutable.fromJS)(reducers.reduce(function (accumulatedPreviousStateDictionary, reducer, reducerIndex) {
+      return _extends({}, accumulatedPreviousStateDictionary, _defineProperty({}, reducerIndex, previousState));
+    }, {}));
+    var combinedState = combinedReducers(combinedPreviousState, action).toJS();
+    var isStateEqualToPreviousState = function isStateEqualToPreviousState(state) {
+      return Object.values(combinedPreviousState.toJS()).filter(function (previousStateForComparison) {
+        return (0, _immutable.Map)((0, _immutable.fromJS)(previousStateForComparison)).equals((0, _immutable.Map)((0, _immutable.fromJS)(state)));
+      }).length > 0;
+    };
+    var newState = Object.values(combinedState).reduce(function (accumulatedState, state) {
+      return isStateEqualToPreviousState(state) ? _extends({}, state, accumulatedState) : _extends({}, accumulatedState, state);
+    }, {});
 
-    return fromJS(newState);
+    return (0, _immutable.fromJS)(newState);
   };
 };
 
-const mergeReducers = (...reducers) => flatCombineReducers(reducers);
+var mergeReducers = function mergeReducers() {
+  for (var _len = arguments.length, reducers = Array(_len), _key = 0; _key < _len; _key++) {
+    reducers[_key] = arguments[_key];
+  }
 
-export default mergeReducers;
+  return flatCombineReducers(reducers);
+};
+
+exports.default = mergeReducers;
