@@ -1,0 +1,32 @@
+{
+  "name": "redux-immutable-merge-reducers",
+  "version": "0.0.1",
+  "description": "Return the flattened output of the redux-immutable combineReducers function.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typekev/redux-immutable-merge-reducers.git"
+  },
+  "keywords": [
+    "redux",
+    "immutable",
+    "combine",
+    "merge",
+    "concatenate",
+    "flatten",
+    "reducers"
+  ],
+  "author": "typekev <kev@typekev.com> (http://typekev.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/typekev/redux-immutable-merge-reducers/issues"
+  },
+  "homepage": "https://github.com/typekev/redux-immutable-merge-reducers#readme",
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "redux-immutable": "^4.0.0"
+  }
+}
