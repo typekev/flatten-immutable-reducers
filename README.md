@@ -6,7 +6,7 @@ Return the flattened output of the redux-immutable combineReducers function.
 
 Use `redux-immutable-merge-reducers` when you want to combine reducers into one flattened state object.
 
-Imprt `mergeReducers` as so:
+Import `mergeReducers` as so:
 
 ```javascript
 import mergeReducers from "redux-immutable-merge-reducers";
